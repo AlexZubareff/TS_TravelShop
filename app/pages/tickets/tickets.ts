@@ -4,11 +4,10 @@ import '@assets/styles/tickets.scss'
 import {initTicketElementTemplate} from "../../templates/ticketInfo";
 import {IVipTicket, TicketType, ITicket} from "../../models/ticket/ticket";
 import {initFooterTitle, initHeaderTitle} from "@services/general/general";
-
+import {initTicketInfo, initUserData, initPostData, registerConfirmButton} from "@services/tickets/ticket";
 
 let ticketInstance: TicketType ;
-let ticketPostInstance;
-const clientType = "custom";
+
 
 
 
@@ -26,6 +25,8 @@ function initApp(): void {
         initHeaderTitle(ticketName, 'h3');
         initFooterTitle('Туры по всему миру', 'h2');
         initTicketInfo(ticketInstance);
+        initUserData();
+        initPostData(data);
     });
 }
 
@@ -33,59 +34,59 @@ function initApp(): void {
     - Указать в методах возвращающие типы, в теле функции также указать типы чтобы не было ошибок
 */
 
-function initTicketInfo(ticket: TicketType | IVipTicket) {
-    const targetElement = document.querySelector('.ticket-info');
-
-    const ticketDescription = ticket?.description;
-    const ticketOperator = ticket?.tourOperator;
-    let vipClientType;
-    if ("vipStatus" in ticket) {
-        vipClientType = ticket.vipStatus;
-    }
-
-
-    const ticketElemsArr: [string, string, string] = [ticketDescription, ticketOperator, vipClientType];
-    let ticketElemTemplate;
-
-    ticketElemsArr.forEach((el, i) => {
-        ticketElemTemplate+= initTicketElementTemplate(el, i);
-    });
-
-    targetElement.innerHTML = ticketElemTemplate;
-
-}
-
-function initUserData() {
-const userInfo = document.querySelectorAll('.user-info > p');
-let userInfoObj;
-    userInfo.forEach((el) => {
-    const inputDataName = el.getAttribute('data-name');
-    if (inputDataName) {
-        const inputElems = el.querySelector('input');
-        userInfoObj[inputDataName] = inputElems.value;
-    }
-    });
-
-    console.log('userInfoObj',userInfoObj)
-    return userInfoObj;
-}
-
-function initPostData(data) {
-    initUserData();
-    postTicketData(data).then((data) => {
-        if (data.success) {
-
-        }
-    })
-}
-
-function registerConfirmButton(): void {
-    const targetEl = document.getElementById('accept-order-button');
-    if (targetEl) {
-        targetEl.addEventListener('click', () => {
-            initPostData(ticketPostInstance);
-        });
-    }
-}
+// function initTicketInfo(ticket: TicketType | IVipTicket) {
+//     const targetElement = document.querySelector('.ticket-info');
+//
+//     const ticketDescription = ticket?.description;
+//     const ticketOperator = ticket?.tourOperator;
+//     let vipClientType;
+//     if ("vipStatus" in ticket) {
+//         vipClientType = ticket.vipStatus;
+//     }
+//
+//
+//     const ticketElemsArr: [string, string, string] = [ticketDescription, ticketOperator, vipClientType];
+//     let ticketElemTemplate;
+//
+//     ticketElemsArr.forEach((el, i) => {
+//         ticketElemTemplate+= initTicketElementTemplate(el, i);
+//     });
+//
+//     targetElement.innerHTML = ticketElemTemplate;
+//
+// }
+//
+// function initUserData() {
+// const userInfo = document.querySelectorAll('.user-info > p');
+// let userInfoObj;
+//     userInfo.forEach((el) => {
+//     const inputDataName = el.getAttribute('data-name');
+//     if (inputDataName) {
+//         const inputElems = el.querySelector('input');
+//         userInfoObj[inputDataName] = inputElems.value;
+//     }
+//     });
+//
+//     console.log('userInfoObj',userInfoObj)
+//     return userInfoObj;
+// }
+//
+// function initPostData(data) {
+//     initUserData();
+//     postTicketData(data).then((data) => {
+//         if (data.success) {
+//
+//         }
+//     })
+// }
+//
+// function registerConfirmButton(): void {
+//     const targetEl = document.getElementById('accept-order-button');
+//     if (targetEl) {
+//         targetEl.addEventListener('click', () => {
+//             initPostData(ticketPostInstance);
+//         });
+//     }
+// }
 
 

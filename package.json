@@ -3,7 +3,7 @@
     "@tsconfig/node16": "^1.0.3"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.18.0",
+    "@types/webpack-env": "^1.18.4",
     "css-loader": "^6.7.1",
     "file-loader": "^6.2.0",
     "html-loader": "^4.1.0",

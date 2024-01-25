@@ -5,29 +5,39 @@ import {toursDataArray} from "../../index"; // ссылка на массив с
 
 // Определить типы для метода (возвращающие и для переменных в теле функции)
 
-export function openModal(type, i: number) {
+export function openModal(type: string, i: number) {
 
     const data = toursDataArray[i];
-    const tourId = data[i]?.id;
-
+    console.log("data: ", data);
+    const tourId: string = data?.id;
+    console.log("tourId: ", tourId);
     let modalInfo = {};
     switch (type) {
         case "order":
             const modalTemplate = `
       <div> 
-      <p data-moda-id="tour-modal" class="close-modal">x</p>
+      <p data-modal-id=${tourId} class="close-modal">x</p>
       <p>${data.name}</p>
       <p>${data.description}</p>
        
        <div data-tour-id=${tourId} class="ticket-submit">
-       <a href="/ticket.html">Купить билет</a>
+       <a href="ticket.html">Купить билет</a>
 </div>
      </div>
   `
-            const modal = new Modal('tour-modal');
-            modal.open(modalTemplate);
-            break;
+            const findModal = Modal.modals.find(x => x.id === tourId);
+            console.log("findModal: ", findModal);
+            if(!findModal) {
+                const modal = new Modal(`${tourId}`);
+                modal.open(modalTemplate);
+                break;
+            }
+
     }
+
 }
 
+function removeModal() {
+    Modal.removeById();
+}
 
